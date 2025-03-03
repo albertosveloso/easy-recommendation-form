@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -109,8 +110,8 @@ interface FormData {
 const RecommendationForm = () => {
   // State
   const [formData, setFormData] = useState<FormData>({
-    genero: '',
-    idade: '',
+    genero: 'Não informar',
+    idade: '30',
     estado: 'SP',
     mes: '',
   });
