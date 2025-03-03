@@ -1,17 +1,16 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronRight, Sparkle } from 'lucide-react';
+import { ChevronRight, Sparkle, Ship } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
 import ProductCard from './ProductCard';
 import ShimmerCard from './ShimmerCard';
 
-// Data for dropdowns
+// Data for selections
 const GENRES = [
   { value: 'Masculino', label: 'Masculino' },
   { value: 'Feminino', label: 'Feminino' },
@@ -172,24 +171,27 @@ const RecommendationForm = () => {
         onSubmit={handleSubmit}
         className="glass rounded-3xl p-6 sm:p-8 shadow-soft transition-all duration-500 animate-fade-in"
       >
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="genero">Gênero</Label>
-            <Select 
-              value={formData.genero} 
-              onValueChange={(value) => handleInputChange('genero', value)}
-            >
-              <SelectTrigger id="genero" className="w-full">
-                <SelectValue placeholder="Selecione o gênero" />
-              </SelectTrigger>
-              <SelectContent>
-                {GENRES.map((genre) => (
-                  <SelectItem key={genre.value} value={genre.value}>
-                    {genre.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-3 gap-2">
+              {GENRES.map((genre) => (
+                <Button
+                  key={genre.value}
+                  type="button"
+                  variant={formData.genero === genre.value ? "default" : "outline"}
+                  className={cn(
+                    "relative h-auto py-3 px-4 transition-all",
+                    "flex items-center justify-center",
+                    formData.genero === genre.value ? "shadow-md" : "hover:bg-gray-50"
+                  )}
+                  onClick={() => handleInputChange('genero', genre.value)}
+                >
+                  <Ship className="w-4 h-4 mr-2" />
+                  <span>{genre.label}</span>
+                </Button>
+              ))}
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -206,40 +208,46 @@ const RecommendationForm = () => {
 
           <div className="space-y-2">
             <Label htmlFor="estado">Estado</Label>
-            <Select 
-              value={formData.estado} 
-              onValueChange={(value) => handleInputChange('estado', value)}
-            >
-              <SelectTrigger id="estado" className="w-full">
-                <SelectValue placeholder="Selecione o estado" />
-              </SelectTrigger>
-              <SelectContent>
-                {STATES.map((state) => (
-                  <SelectItem key={state.value} value={state.value}>
-                    {state.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-40 overflow-y-auto p-2 border rounded-md">
+              {STATES.map((state) => (
+                <Button
+                  key={state.value}
+                  type="button"
+                  variant={formData.estado === state.value ? "default" : "outline"}
+                  className={cn(
+                    "h-auto py-2 px-3 transition-all text-sm",
+                    "flex items-center justify-start",
+                    formData.estado === state.value ? "shadow-md" : "hover:bg-gray-50"
+                  )}
+                  onClick={() => handleInputChange('estado', state.value)}
+                >
+                  <Ship className="w-3 h-3 mr-2 flex-shrink-0" />
+                  <span className="truncate">{state.label}</span>
+                </Button>
+              ))}
+            </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="mes">Mês do Ano</Label>
-            <Select 
-              value={formData.mes} 
-              onValueChange={(value) => handleInputChange('mes', value)}
-            >
-              <SelectTrigger id="mes" className="w-full">
-                <SelectValue placeholder="Selecione o mês" />
-              </SelectTrigger>
-              <SelectContent>
-                {MONTHS.map((month) => (
-                  <SelectItem key={month.value} value={month.value}>
-                    {month.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              {MONTHS.map((month) => (
+                <Button
+                  key={month.value}
+                  type="button"
+                  variant={formData.mes === month.value ? "default" : "outline"}
+                  className={cn(
+                    "h-auto py-2 px-3 transition-all text-sm",
+                    "flex items-center justify-center",
+                    formData.mes === month.value ? "shadow-md" : "hover:bg-gray-50"
+                  )}
+                  onClick={() => handleInputChange('mes', month.value)}
+                >
+                  <Ship className="w-3 h-3 mr-2" />
+                  <span>{month.label}</span>
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
 
