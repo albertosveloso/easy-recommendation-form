@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronRight, Sparkle, Ship, Circle } from 'lucide-react';
+import { ChevronRight, Sparkle, Ship, User, UserCheck, UserPlus, UserRound } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -17,13 +16,11 @@ const GENRES = [
   { value: 'Não informar', label: 'Não informar' },
 ];
 
-const AGE_SUGGESTIONS = [
-  { value: '18', label: '18' },
-  { value: '25', label: '25' },
-  { value: '30', label: '30' },
-  { value: '40', label: '40' },
-  { value: '50', label: '50' },
-  { value: '60+', label: '60+' },
+const AGE_RANGES = [
+  { value: 'Até 25 anos', label: 'Até 25 anos', icon: User },
+  { value: 'Entre 26 e 35 anos', label: 'Entre 26 e 35 anos', icon: UserCheck },
+  { value: 'Entre 36 e 50 anos', label: 'Entre 36 e 50 anos', icon: UserPlus },
+  { value: 'Acima de 51 anos', label: 'Acima de 51 anos', icon: UserRound },
 ];
 
 const STATES = [
@@ -111,7 +108,7 @@ const RecommendationForm = () => {
   // State
   const [formData, setFormData] = useState<FormData>({
     genero: 'Não informar',
-    idade: '30',
+    idade: 'Entre 36 e 50 anos',
     estado: 'SP',
     mes: '',
   });
@@ -119,25 +116,13 @@ const RecommendationForm = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [customAge, setCustomAge] = useState('');
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const finalFormData = {
-      ...formData,
-      idade: formData.idade || customAge,
-    };
-    
-    if (!finalFormData.genero || !finalFormData.idade || !finalFormData.estado || !finalFormData.mes) {
+    if (!formData.genero || !formData.idade || !formData.estado || !formData.mes) {
       toast.error('Por favor, preencha todos os campos');
-      return;
-    }
-
-    const ageValue = finalFormData.idade === '60+' ? '60' : finalFormData.idade;
-    if (isNaN(Number(ageValue))) {
-      toast.error('A idade deve ser um número');
       return;
     }
 
@@ -145,7 +130,7 @@ const RecommendationForm = () => {
     setHasSubmitted(true);
     
     try {
-      const recommendations = await fetchRecommendations(finalFormData);
+      const recommendations = await fetchRecommendations(formData);
       setProducts(recommendations);
     } catch (error) {
       console.error('Error fetching recommendations:', error);
@@ -157,16 +142,6 @@ const RecommendationForm = () => {
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleAgeSelection = (age: string) => {
-    handleInputChange('idade', age);
-    setCustomAge('');
-  };
-
-  const handleCustomAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomAge(e.target.value);
-    handleInputChange('idade', '');
   };
 
   return (
@@ -217,33 +192,26 @@ const RecommendationForm = () => {
 
           <div className="space-y-2">
             <Label htmlFor="idade">Idade</Label>
-            <div className="grid grid-cols-3 gap-2 mb-2">
-              {AGE_SUGGESTIONS.map((age) => (
-                <Button
-                  key={age.value}
-                  type="button"
-                  variant={formData.idade === age.value ? "default" : "outline"}
-                  className={cn(
-                    "relative h-auto py-3 px-4 transition-all",
-                    "flex items-center justify-center",
-                    formData.idade === age.value ? "shadow-md" : "hover:bg-gray-50"
-                  )}
-                  onClick={() => handleAgeSelection(age.value)}
-                >
-                  <Circle className="w-4 h-4 mr-2" />
-                  <span>{age.label}</span>
-                </Button>
-              ))}
-            </div>
-            <div className="flex items-center">
-              <Input
-                id="idade-custom"
-                type="text"
-                placeholder="Ou digite uma idade específica"
-                value={customAge}
-                onChange={handleCustomAgeChange}
-                className="w-full"
-              />
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
+              {AGE_RANGES.map((ageRange) => {
+                const Icon = ageRange.icon;
+                return (
+                  <Button
+                    key={ageRange.value}
+                    type="button"
+                    variant={formData.idade === ageRange.value ? "default" : "outline"}
+                    className={cn(
+                      "relative h-auto py-3 px-4 transition-all",
+                      "flex items-center justify-center",
+                      formData.idade === ageRange.value ? "shadow-md" : "hover:bg-gray-50"
+                    )}
+                    onClick={() => handleInputChange('idade', ageRange.value)}
+                  >
+                    <Icon className="w-4 h-4 mr-2" />
+                    <span>{ageRange.label}</span>
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
