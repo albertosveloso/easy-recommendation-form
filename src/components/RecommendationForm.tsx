@@ -8,8 +8,6 @@ import {
   User,
   Calendar,
   MapPin,
-  Baby,
-  GraduationCap,
   HelpCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,10 +24,10 @@ const GENRES = [
 ];
 
 const AGE_RANGES = [
-  { value: 'Até 25 anos', label: 'Até 25 anos', icon: Baby },
+  { value: 'Até 25 anos', label: 'Até 25 anos', icon: User },
   { value: 'Entre 26 e 35 anos', label: 'Entre 26 e 35 anos', icon: User },
   { value: 'Entre 36 e 50 anos', label: 'Entre 36 e 50 anos', icon: User },
-  { value: 'Acima de 51 anos', label: 'Acima de 51 anos', icon: GraduationCap },
+  { value: 'Acima de 51 anos', label: 'Acima de 51 anos', icon: User },
 ];
 
 const STATES = [
