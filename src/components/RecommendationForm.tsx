@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,8 +11,6 @@ import {
   Baby,
   GraduationCap,
   HelpCircle,
-  Male,
-  Female
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -23,8 +20,8 @@ import ShimmerCard from './ShimmerCard';
 
 // Data for selections
 const GENRES = [
-  { value: 'Masculino', label: 'Masculino', icon: Male },
-  { value: 'Feminino', label: 'Feminino', icon: Female },
+  { value: 'Masculino', label: 'Masculino', icon: User },
+  { value: 'Feminino', label: 'Feminino', icon: User },
   { value: 'Não informar', label: 'Não informar', icon: HelpCircle },
 ];
 
@@ -57,7 +54,6 @@ const MONTHS = [
   { value: 'Dezembro', label: 'Dezembro' },
 ];
 
-// Mock API function
 const fetchRecommendations = async ({ genero, idade, estado, mes }: FormData) => {
   console.log('Fetching recommendations with:', { genero, idade, estado, mes });
   
@@ -85,7 +81,6 @@ const fetchRecommendations = async ({ genero, idade, estado, mes }: FormData) =>
   ];
 };
 
-// Types
 interface FormData {
   genero: string;
   idade: string;
@@ -94,7 +89,6 @@ interface FormData {
 }
 
 const RecommendationForm = () => {
-  // State
   const [formData, setFormData] = useState<FormData>({
     genero: 'Não informar',
     idade: 'Entre 36 e 50 anos',
@@ -106,7 +100,6 @@ const RecommendationForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
