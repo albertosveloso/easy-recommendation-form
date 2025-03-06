@@ -1,8 +1,20 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronRight, Sparkle, Ship, User, UserCheck, UserPlus, UserRound } from 'lucide-react';
+import { 
+  ChevronRight, 
+  Sparkle, 
+  User,
+  Calendar,
+  MapPin,
+  Baby,
+  GraduationCap,
+  HelpCircle,
+  GenderMale,
+  GenderFemale
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
@@ -11,16 +23,16 @@ import ShimmerCard from './ShimmerCard';
 
 // Data for selections
 const GENRES = [
-  { value: 'Masculino', label: 'Masculino' },
-  { value: 'Feminino', label: 'Feminino' },
-  { value: 'Não informar', label: 'Não informar' },
+  { value: 'Masculino', label: 'Masculino', icon: GenderMale },
+  { value: 'Feminino', label: 'Feminino', icon: GenderFemale },
+  { value: 'Não informar', label: 'Não informar', icon: HelpCircle },
 ];
 
 const AGE_RANGES = [
-  { value: 'Até 25 anos', label: 'Até 25 anos', icon: User },
-  { value: 'Entre 26 e 35 anos', label: 'Entre 26 e 35 anos', icon: UserCheck },
-  { value: 'Entre 36 e 50 anos', label: 'Entre 36 e 50 anos', icon: UserPlus },
-  { value: 'Acima de 51 anos', label: 'Acima de 51 anos', icon: UserRound },
+  { value: 'Até 25 anos', label: 'Até 25 anos', icon: Baby },
+  { value: 'Entre 26 e 35 anos', label: 'Entre 26 e 35 anos', icon: User },
+  { value: 'Entre 36 e 50 anos', label: 'Entre 36 e 50 anos', icon: User },
+  { value: 'Acima de 51 anos', label: 'Acima de 51 anos', icon: GraduationCap },
 ];
 
 const STATES = [
@@ -148,22 +160,25 @@ const RecommendationForm = () => {
           <div className="space-y-2">
             <Label htmlFor="genero">Gênero</Label>
             <div className="grid grid-cols-3 gap-2">
-              {GENRES.map((genre) => (
-                <Button
-                  key={genre.value}
-                  type="button"
-                  variant={formData.genero === genre.value ? "default" : "outline"}
-                  className={cn(
-                    "relative h-auto py-3 px-4 transition-all",
-                    "flex items-center justify-center",
-                    formData.genero === genre.value ? "shadow-md" : "hover:bg-gray-50"
-                  )}
-                  onClick={() => handleInputChange('genero', genre.value)}
-                >
-                  <Ship className="w-4 h-4 mr-2" />
-                  <span>{genre.label}</span>
-                </Button>
-              ))}
+              {GENRES.map((genre) => {
+                const Icon = genre.icon;
+                return (
+                  <Button
+                    key={genre.value}
+                    type="button"
+                    variant={formData.genero === genre.value ? "default" : "outline"}
+                    className={cn(
+                      "relative h-auto py-3 px-4 transition-all",
+                      "flex items-center justify-center",
+                      formData.genero === genre.value ? "shadow-md" : "hover:bg-gray-50"
+                    )}
+                    onClick={() => handleInputChange('genero', genre.value)}
+                  >
+                    <Icon className="w-4 h-4 mr-2" />
+                    <span>{genre.label}</span>
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
@@ -207,7 +222,7 @@ const RecommendationForm = () => {
                   )}
                   onClick={() => handleInputChange('estado', state.value)}
                 >
-                  <Ship className="w-3 h-3 mr-2 flex-shrink-0" />
+                  <MapPin className="w-3 h-3 mr-2 flex-shrink-0" />
                   <span className="truncate">{state.label}</span>
                 </Button>
               ))}
@@ -229,7 +244,7 @@ const RecommendationForm = () => {
                   )}
                   onClick={() => handleInputChange('mes', month.value)}
                 >
-                  <Ship className="w-3 h-3 mr-2" />
+                  <Calendar className="w-3 h-3 mr-2" />
                   <span>{month.label}</span>
                 </Button>
               ))}
