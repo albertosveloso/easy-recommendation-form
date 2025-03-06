@@ -12,8 +12,8 @@ import {
   Baby,
   GraduationCap,
   HelpCircle,
-  GenderMale,
-  GenderFemale
+  Male,
+  Female
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -23,8 +23,8 @@ import ShimmerCard from './ShimmerCard';
 
 // Data for selections
 const GENRES = [
-  { value: 'Masculino', label: 'Masculino', icon: GenderMale },
-  { value: 'Feminino', label: 'Feminino', icon: GenderFemale },
+  { value: 'Masculino', label: 'Masculino', icon: Male },
+  { value: 'Feminino', label: 'Feminino', icon: Female },
   { value: 'Não informar', label: 'Não informar', icon: HelpCircle },
 ];
 
