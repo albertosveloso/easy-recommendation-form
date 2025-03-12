@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -54,11 +53,12 @@ const MONTHS = [
 ];
 
 const PRODUCTS = [
-  { value: 'Smartphone', label: 'Smartphone' },
-  { value: 'Notebook', label: 'Notebook' },
-  { value: 'Headphone', label: 'Headphone' },
-  { value: 'Smart Watch', label: 'Smart Watch' },
-  { value: 'Tablet', label: 'Tablet' },
+  { value: 'DIPIRONA', label: 'DIPIRONA' },
+  { value: 'CIMEGRIPE', label: 'CIMEGRIPE' },
+  { value: 'DORFLEX', label: 'DORFLEX' },
+  { value: 'LENÇO UMEDECIDO', label: 'LENÇO UMEDECIDO' },
+  { value: 'LORATAMED', label: 'LORATAMED' },
+  { value: 'GLIFAGE', label: 'GLIFAGE' },
 ];
 
 interface FormData {
