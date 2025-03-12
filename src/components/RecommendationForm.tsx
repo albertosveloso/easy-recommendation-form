@@ -9,6 +9,7 @@ import {
   Calendar,
   MapPin,
   HelpCircle,
+  Package,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -16,7 +17,6 @@ import { toast } from 'sonner';
 import ProductCard from './ProductCard';
 import ShimmerCard from './ShimmerCard';
 
-// Data for selections
 const GENRES = [
   { value: 'Masculino', label: 'Masculino', icon: User },
   { value: 'Feminino', label: 'Feminino', icon: User },
@@ -52,8 +52,24 @@ const MONTHS = [
   { value: 'Dezembro', label: 'Dezembro' },
 ];
 
-const fetchRecommendations = async ({ genero, idade, estado, mes }: FormData) => {
-  console.log('Fetching recommendations with:', { genero, idade, estado, mes });
+const PRODUCTS = [
+  { value: 'Smartphone', label: 'Smartphone' },
+  { value: 'Notebook', label: 'Notebook' },
+  { value: 'Headphone', label: 'Headphone' },
+  { value: 'Smart Watch', label: 'Smart Watch' },
+  { value: 'Tablet', label: 'Tablet' },
+];
+
+interface FormData {
+  genero: string;
+  idade: string;
+  estado: string;
+  mes: string;
+  produto: string;
+}
+
+const fetchRecommendations = async ({ genero, idade, estado, mes, produto }: FormData) => {
+  console.log('Fetching recommendations with:', { genero, idade, estado, mes, produto });
   
   await new Promise(resolve => setTimeout(resolve, 1500));
   
@@ -62,29 +78,19 @@ const fetchRecommendations = async ({ genero, idade, estado, mes }: FormData) =>
       id: '1',
       name: 'Kit de Organização Premium',
       description: 'Conjunto de acessórios de organização para otimizar seu espaço com design minimalista e materiais de alta qualidade.',
-      imageUrl: 'https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
     },
     {
       id: '2',
       name: 'Luminária Inteligente TouchSense',
       description: 'Iluminação adaptativa com controle por gestos e integração com assistentes de voz para criar o ambiente perfeito.',
-      imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
     },
     {
       id: '3',
       name: 'Headphone Noise Cancelling Pro',
       description: 'Som imersivo com cancelamento de ruído adaptativo e bateria de longa duração para experiências sonoras perfeitas.',
-      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
     },
   ];
 };
-
-interface FormData {
-  genero: string;
-  idade: string;
-  estado: string;
-  mes: string;
-}
 
 const RecommendationForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -92,6 +98,7 @@ const RecommendationForm = () => {
     idade: 'Entre 36 e 50 anos',
     estado: 'MT',
     mes: '',
+    produto: '',
   });
 
   const [products, setProducts] = useState<any[]>([]);
@@ -101,7 +108,7 @@ const RecommendationForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.genero || !formData.idade || !formData.estado || !formData.mes) {
+    if (!formData.genero || !formData.idade || !formData.estado || !formData.mes || !formData.produto) {
       toast.error('Por favor, preencha todos os campos');
       return;
     }
@@ -240,6 +247,35 @@ const RecommendationForm = () => {
                 </Button>
               ))}
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="produto">Produto de Interesse</Label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+              {PRODUCTS.map((product) => (
+                <Button
+                  key={product.value}
+                  type="button"
+                  variant={formData.produto === product.value ? "default" : "outline"}
+                  className={cn(
+                    "h-auto py-2 px-3 transition-all text-sm",
+                    "flex items-center justify-center",
+                    formData.produto === product.value ? "shadow-md" : "hover:bg-gray-50"
+                  )}
+                  onClick={() => handleInputChange('produto', product.value)}
+                >
+                  <Package className="w-3 h-3 mr-2" />
+                  <span>{product.label}</span>
+                </Button>
+              ))}
+            </div>
+            <Input
+              type="text"
+              placeholder="Ou digite o nome do produto"
+              value={formData.produto}
+              onChange={(e) => handleInputChange('produto', e.target.value)}
+              className="w-full"
+            />
           </div>
         </div>
 
