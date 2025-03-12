@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,7 +100,7 @@ const RecommendationForm = () => {
     idade: 'Entre 36 e 50 anos',
     estado: 'MT',
     mes: 'Março',
-    produto: '',
+    produto: 'CIMEGRIPE',
   });
 
   const [products, setProducts] = useState<any[]>([]);
