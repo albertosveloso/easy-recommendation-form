@@ -23,8 +23,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
       )}
       style={{ animationDelay: `${Math.random() * 0.2}s` }}
     >
-      <h3 className="text-xl font-medium mb-2 line-clamp-2">{product.name}</h3>
-      <p className="text-sm text-gray-500 mb-4 flex-grow line-clamp-3">{product.description}</p>
+      <h3 className="text-xl font-medium mb-4 line-clamp-2">{product.name}</h3>
       
       <div className="mt-auto">
         <button className="flex items-center text-sm font-medium text-primary group">
