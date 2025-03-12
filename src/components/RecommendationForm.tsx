@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -97,7 +98,7 @@ const RecommendationForm = () => {
     genero: 'Não informar',
     idade: 'Entre 36 e 50 anos',
     estado: 'MT',
-    mes: '',
+    mes: 'Março',
     produto: '',
   });
 
